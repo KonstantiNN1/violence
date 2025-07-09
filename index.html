@@ -33,7 +33,6 @@
     .btn {
       padding: 20px 40px;
       font-size: 30px;
-      background-color: crimson;
       border: none;
       color: white;
       cursor: pointer;
@@ -42,9 +41,18 @@
       transition: background-color 0.3s;
     }
 
+    .btn:disabled {
+      background-color: #555;
+      cursor: not-allowed;
+    }
+
+    .btn:not(:disabled) {
+      background-color: crimson;
+    }
+/* 
     .btn:hover {
       background-color: darkred;
-    }
+    } */
 
     .text-block {
       font-size: 27px;
@@ -198,56 +206,70 @@
 </head>
 <body>
 <main>
-    <h1>Welcome to the<br>Global Violence Tracker</h1>
-    <p class="text-block" id="instructionText">
-      “No reasonable person would think of blotting out ink stains with ink or oil stains with oil — yet blood is always washed away only with blood.”<br>
-      — Bertha von Suttner, Lay Down Your Arms!
-    </p>
+  <h1>Welcome to the<br>Global Violence Tracker</h1>
 
-    <p class="text-block" id="startPrompt">Click START NOW to begin.</p>
-    <button class="btn" id="startBtn">START NOW</button>
+  <p class="text-block" id="instructionText" style="text-align:left;">
+    This webpage displays the level of violence in the world in real time<sup>*</sup>
+  </p>
 
-    <section id="contentPage" class="hidden">
+  <button class="btn" id="startBtn" disabled>START NOW</button>
+
+  <div id="checkboxes" class="text-block" style="text-align:left; max-width:720px; margin:20px auto;">
+    <label style="display:block; margin-bottom:10px;">
+      <input type="checkbox" id="consent1" style="margin-right:10px;">
+      I acknowledge that the following materials relate to real-world violence and may be triggering for some individuals.
+    </label>
+    <label style="display:block;">
+      <input type="checkbox" id="consent2" style="margin-right:10px;">
+      I understand that by clicking the button, I am NOT triggering violence in the world, but simply observing statistics.
+    </label>
+  </div>
+
+  <section id="contentPage" class="hidden">
     <h2 id="violentTitle" class="hidden">Violent Offences</h2>
 
-      <img src="images/first.png" alt="Illustration 1" loading="eager" decoding="async" />
-      <div class="counter-block">
-        <div class="counter-title">Registered Violence Offenses</div>
-        <div class="counter-value" id="count1">0</div>
-      </div>
+    <img src="images/first.png" alt="Illustration 1" loading="eager" decoding="async">
 
-      <div class="text-block">
-        Every three seconds, approximately four violent crimes are committed worldwide. However, it is important to recognize that these are only officially recorded cases, representing just a fraction of the actual situation. Research conducted in European Union countries shows that only 13–25% of women who have experienced gender-based violence report it to the authorities. The remaining cases remain invisible — both to institutions and, often, to society as a whole.
-      </div>
+    <div class="counter-block">
+      <div class="counter-title">Registered Violence Offenses</div>
+      <div class="counter-value" id="count1">0</div>
+    </div>
 
-      <img src="images/second.png" alt="Illustration 2" loading="eager" decoding="async" />
-      <div class="counter-block">
-        <div class="counter-title">Possible Violence Offenses</div>
-        <div class="counter-value" id="count2">0</div>
-      </div>
+    <div class="text-block" style="text-align:left;">
+      Every three seconds, approximately four violent crimes are committed worldwide. However, it is important to recognize that these are only officially recorded cases, representing just a fraction of the actual situation. Research conducted in European Union countries shows that only 13–25% of women who have experienced gender-based violence report it to the authorities. The remaining cases remain invisible — both to institutions and, often, to society as a whole.
+    </div>
 
-      <div class="text-block">
-        There are several reasons why people choose not to report crimes.<br>
-        <b>Psychological factors: </b>feelings of shame, fear, or cognitive distortions — the belief that "this is normal" or "how things are supposed to be."<br>
-        <b>Social reasons: </b>Victim-blaming, cultural norms, and societal expectations often discourage victims from speaking out. In many communities, silence becomes the default response.<br>
-        <b>Institutional barriers: </b>lack of trust in the police, system overload, or the simple inaccessibility of formal reporting mechanisms.
-      </div>
+    <img src="images/second.png" alt="Illustration 2" loading="eager" decoding="async">
 
-      <h2 id="homicideTitle" class="hidden">Intentional Homicide</h2>
+    <div class="counter-block">
+      <div class="counter-title">Possible Violence Offenses</div>
+      <div class="counter-value" id="count2">0</div>
+    </div>
 
-      <img src="images/third.png" alt="Illustration 3" loading="eager" decoding="async" />
-      <div class="counter-block">
-        <div class="counter-title">Registered Homicides</div>
-        <div class="counter-value" id="count3">0</div>
-      </div>
+    <div class="text-block" style="text-align:left;">
+      <p>There are several reasons why people choose not to report crimes.</p>
+      <ul style="list-style: disc inside; margin: 0; padding-left: 1em;">
+        <li><b>Psychological factors:</b> feelings of shame, fear, or cognitive distortions — the belief that “this is normal” or “how things are supposed to be.”</li>
+        <li><b>Social reasons:</b> victim-blaming, cultural norms, and societal expectations often discourage victims from speaking out. In many communities, silence becomes the default response.</li>
+        <li><b>Institutional barriers:</b> lack of trust in the police, system overload, or the simple inaccessibility of formal reporting mechanisms.</li>
+      </ul>
+    </div>
 
-      <div class="text-block">
-        The rate of intentional homicides has remained relatively stable over last 15 years, ranging from 416,965 to 451,046 cases per year. This means that approximately 50 murders occur every hour worldwide. However, the geography of violence matters greatly. Some regions are far safer than others. For example, in Oceania, there are on average 3 to 4 homicides per day, while in the Americas, that number is around 412 homicides per day. The homicide rate in the Americas is nearly five times higher than in Oceania.
-      </div>
+    <h2 id="homicideTitle" class="hidden">Intentional Homicide</h2>
 
-      <button class="btn" id="stopBtn">STOP VIOLENCE</button>
-    </section>
-  </main>
+    <img src="images/third.png" alt="Illustration 3" loading="eager" decoding="async">
+
+    <div class="counter-block">
+      <div class="counter-title">Registered Homicides</div>
+      <div class="counter-value" id="count3">1</div>
+    </div>
+
+    <div class="text-block" style="text-align:left;">
+      The rate of intentional homicides has remained relatively stable over the last 15 years, ranging from 416,965 to 451,046 cases per year. This means that approximately 50 murders occur every hour worldwide. However, the geography of violence matters greatly. Some regions are far safer than others. For example, in Oceania, there are on average 3 to 4 homicides per day, while in the Americas, that number is around 412 homicides per day. The homicide rate in the Americas is nearly five times higher than in Oceania.
+    </div>
+
+    <button class="btn" id="stopBtn">STOP VIOLENCE</button>
+  </section>
 
   <div id="popup-overlay" class="hidden"></div>
   <div id="popup" class="hidden">
@@ -260,94 +282,107 @@
       <li>Do not use violence to achieve your goals.</li>
     </ul>
   </div>
+</main>
 
 <footer>
-    <div class="container">
-      <details>
-        <summary>Sources</summary>
-        <ul>
-          <li><a href="https://dataunodc.un.org/dp-intentional-homicide-victims-est" target="_blank">Intentional Homicides – UNODC</a></li>
-          <li><a href="https://dataunodc.un.org/dp-crime-violent-offences" target="_blank">Violent Offences – UNODC</a></li>
-          <li><a href="https://www.unodc.org/unodc/en/data-and-analysis/global-study-on-homicide.html" target="_blank">Global Study on Homicide – UNODC</a></li>
-          <li><a href="https://www.zitate7.de/4051/Keinem-vernuenftigen-Menschen-wird-es-einfallen.html" target="_blank">Quote by Bertha von Suttner</a></li>
-          <li><a href="https://pace.coe.int/en/files/22519/html?utm_source=chatgpt.com#_TOC_d50e288" target="_blank">Violence Against Women – PACE</a></li>
-          <li><a href="https://www150.statcan.gc.ca/n1/pub/85-002-x/2015001/article/14198-eng.htm" target="_blank">Reporting Victimization – Canada</a></li>
-        </ul>
-      </details>
-      <details>
-        <summary>Methodology</summary>
-        <p>Detailed description of research methods, data collection procedures, and analysis techniques used throughout the project.</p>
-      </details>
-      <details>
-        <summary>Authorship</summary>
-        <p>
-          Concept and text – Konstantin<br />
-          Illustrations – ChatGPT<br />
-          Code – Konstantin and ChatGPT
-        </p>
-      </details>
-    </div>
-  </footer>
+  <div class="container">
+    <details>
+      <summary>Sources</summary>
+      <ul>
+        <li><a href="https://dataunodc.un.org/dp-intentional-homicide-victims-est" target="_blank">Intentional Homicides – UNODC</a></li>
+        <li><a href="https://dataunodc.un.org/dp-crime-violent-offences" target="_blank">Violent Offences – UNODC</a></li>
+        <li><a href="https://www.unodc.org/unodc/en/data-and-analysis/global-study-on-homicide.html" target="_blank">Global Study on Homicide – UNODC</a></li>
+        <li><a href="https://www.zitate7.de/4051/Keinem-vernuenftigen-Menschen-wird-es-einfallen.html" target="_blank">Quote by Bertha von Suttner</a></li>
+        <li><a href="https://pace.coe.int/en/files/22519/html?utm_source=chatgpt.com#_TOC_d50e288" target="_blank">Violence Against Women – PACE</a></li>
+        <li><a href="https://www150.statcan.gc.ca/n1/pub/85-002-x/2015001/article/14198-eng.htm" target="_blank">Reporting Victimization – Canada</a></li>
+      </ul>
+    </details>
+
+    <details>
+      <summary>Methodology</summary>
+      <p>
+        • <b>Data source:</b> All figures come from UNODC.<br>
+        • <b>Counter 1:</b> Summed latest violent‐crime totals per country, then divided by 525 600 (365×24×60) to get crimes per minute.<br>
+        • <b>Counter 2:</b> Multiplied Counter 1’s rate by 5 to account for under‐reporting (based on 13–25 % reporting rates).<br>
+        • <b>Counter 3:</b> Used global 2023 homicide total, started at 1, and incremented every 75 000 ms (~50 murders/hour).
+      </p>
+    </details>
+
+    <details>
+      <summary>Authorship</summary>
+      <p>
+        Concept and text – Konstantin<br>
+        Illustrations – ChatGPT<br>
+        Code – Konstantin and ChatGPT
+      </p>
+    </details>
+  </div>
+</footer>
 
   <script>
-    const startBtn = document.getElementById('startBtn');
-    const stopBtn = document.getElementById('stopBtn');
-    const popup = document.getElementById('popup');
-    const popupOverlay = document.getElementById('popup-overlay');
-    const popupClose = document.getElementById('popupClose');
+  const startBtn      = document.getElementById('startBtn');
+  const checkbox1     = document.getElementById('consent1');
+  const checkbox2     = document.getElementById('consent2');
+  const checkboxesDiv = document.getElementById('checkboxes');
+  const instrText     = document.getElementById('instructionText');
+  const contentPage   = document.getElementById('contentPage');
+  const violentTitle  = document.getElementById('violentTitle');
+  const homicideTitle = document.getElementById('homicideTitle');
 
-    let count1 = 0, count2 = 0, count3 = 0;
-    let timers = [];
+  function updateStartBtnState() {
+    startBtn.disabled = !(checkbox1.checked && checkbox2.checked);
+  }
+  checkbox1.addEventListener('change', updateStartBtnState);
+  checkbox2.addEventListener('change', updateStartBtnState);
 
-    const preloadImages = () => {
-      ['first.png', 'second.png', 'third.png'].forEach(img => {
-        const i = new Image();
-        i.src = `images/${img}`;
-      });
-    };
+  let count1 = 0, count2 = 0, count3 = 1, timers = [];
 
-    document.addEventListener("DOMContentLoaded", () => {
-      preloadImages();
-    });
+  startBtn.addEventListener('click', () => {
+    startBtn.classList.add('hidden');
+    instrText.classList.add('hidden');
+    checkboxesDiv.classList.add('hidden');
 
-    startBtn.addEventListener('click', () => {
-      startBtn.classList.add('hidden');
-      document.getElementById('instructionText').classList.add('hidden');
-      document.getElementById('startPrompt').classList.add('hidden');
-      document.getElementById('contentPage').classList.remove('hidden');
-      document.getElementById('violentTitle').classList.remove('hidden');
-      document.getElementById('homicideTitle').classList.remove('hidden');
+    contentPage.classList.remove('hidden');
+    violentTitle.classList.remove('hidden');
+    homicideTitle.classList.remove('hidden');
 
-      timers.push(setInterval(() => {
-        count1++;
-        document.getElementById('count1').textContent = count1.toLocaleString();
-      }, 740));
+    // count1 и count2 стартуют с 0 автоматически
+    timers.push(setInterval(() => {
+      count1++;
+      document.getElementById('count1').textContent = count1.toLocaleString();
+    }, 740));
 
-      timers.push(setInterval(() => {
-        count2++;
-        document.getElementById('count2').textContent = count2.toLocaleString();
-      }, 148));
+    timers.push(setInterval(() => {
+      count2++;
+      document.getElementById('count2').textContent = count2.toLocaleString();
+    }, 148));
 
-      timers.push(setInterval(() => {
-        count3++;
-        document.getElementById('count3').textContent = count3.toLocaleString();
-      }, 75000));
-    });
+    // count3 стартует с 1
+    timers.push(setInterval(() => {
+      count3++;
+      document.getElementById('count3').textContent = count3.toLocaleString();
+    }, 75000));
+  });
 
-    stopBtn.addEventListener('click', () => {
-      popup.classList.remove('hidden');
-      popupOverlay.classList.remove('hidden');
-    });
+  // popup logic
+  const stopBtn    = document.getElementById('stopBtn');
+  const popup      = document.getElementById('popup');
+  const overlay    = document.getElementById('popup-overlay');
+  const popupClose = document.getElementById('popupClose');
 
-    popupClose.addEventListener('click', () => {
-      popup.classList.add('hidden');
-      popupOverlay.classList.add('hidden');
-    });
+  stopBtn.addEventListener('click', () => {
+    popup.classList.remove('hidden');
+    overlay.classList.remove('hidden');
+  });
+  popupClose.addEventListener('click', () => {
+    popup.classList.add('hidden');
+    overlay.classList.add('hidden');
+  });
+  overlay.addEventListener('click', () => {
+    popup.classList.add('hidden');
+    overlay.classList.add('hidden');
+  });
+</script>
 
-    popupOverlay.addEventListener('click', () => {
-      popup.classList.add('hidden');
-      popupOverlay.classList.add('hidden');
-    });
-  </script>
 </body>
 </html>
