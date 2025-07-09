@@ -1,11 +1,10 @@
-<!DOCTYPE html>
+  <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Global Violence Tracker</title>
 
-  <!-- Прелоад изображений -->
   <link rel="preload" as="image" href="images/first.png" />
   <link rel="preload" as="image" href="images/second.png" />
   <link rel="preload" as="image" href="images/third.png" />
@@ -81,6 +80,62 @@
       display: none;
     }
 
+    #popup {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: #222;
+      color: #fff;
+      padding: 30px 30px 20px;
+      border: 2px solid crimson;
+      border-radius: 12px;
+      box-shadow: 0 0 20px rgba(255, 0, 0, 0.5);
+      max-width: 600px;
+      z-index: 9999;
+    }
+
+    #popup h3 {
+      font-size: 28px;
+      margin-bottom: 10px;
+      color: crimson;
+    }
+
+    #popup p {
+      font-size: 20px;
+      margin: 10px 0 20px;
+    }
+
+    #popup ul {
+      text-align: left;
+      margin: 0;
+      padding-left: 20px;
+    }
+
+    #popup ul li {
+      margin-bottom: 10px;
+      font-size: 20px;
+    }
+
+    #popup .close {
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      font-size: 24px;
+      color: #fff;
+      cursor: pointer;
+    }
+
+    #popup-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.6);
+      z-index: 9998;
+    }
+
     footer {
       margin-top: 100px;
       padding: 40px 20px 80px;
@@ -142,10 +197,8 @@
   </style>
 </head>
 <body>
-
-  <main>
+<main>
     <h1>Welcome to the<br>Global Violence Tracker</h1>
-    <h2 id="violentTitle" class="hidden">Violent Offences</h2>
     <p class="text-block" id="instructionText">
       “No reasonable person would think of blotting out ink stains with ink or oil stains with oil — yet blood is always washed away only with blood.”<br>
       — Bertha von Suttner, Lay Down Your Arms!
@@ -155,15 +208,22 @@
     <button class="btn" id="startBtn">START NOW</button>
 
     <section id="contentPage" class="hidden">
+    <h2 id="violentTitle" class="hidden">Violent Offences</h2>
 
       <img src="images/first.png" alt="Illustration 1" loading="eager" decoding="async" />
+      <div class="counter-block">
+        <div class="counter-title">Registered Violence Offenses</div>
+        <div class="counter-value" id="count1">0</div>
+      </div>
+
       <div class="text-block">
         Every three seconds, approximately four violent crimes are committed worldwide. However, it is important to recognize that these are only officially recorded cases, representing just a fraction of the actual situation. Research conducted in European Union countries shows that only 13–25% of women who have experienced gender-based violence report it to the authorities. The remaining cases remain invisible — both to institutions and, often, to society as a whole.
       </div>
 
+      <img src="images/second.png" alt="Illustration 2" loading="eager" decoding="async" />
       <div class="counter-block">
-        <div class="counter-title">Registered Violence Offenses</div>
-        <div class="counter-value" id="count1">0</div>
+        <div class="counter-title">Possible Violence Offenses</div>
+        <div class="counter-value" id="count2">0</div>
       </div>
 
       <div class="text-block">
@@ -173,29 +233,35 @@
         <b>Institutional barriers: </b>lack of trust in the police, system overload, or the simple inaccessibility of formal reporting mechanisms.
       </div>
 
-      <img src="images/second.png" alt="Illustration 2" loading="eager" decoding="async" />
-      <div class="counter-block">
-        <div class="counter-title">Possible Violence Offenses</div>
-        <div class="counter-value" id="count2">0</div>
-      </div>
-
       <h2 id="homicideTitle" class="hidden">Intentional Homicide</h2>
 
       <img src="images/third.png" alt="Illustration 3" loading="eager" decoding="async" />
-      <div class="text-block">
-        The rate of intentional homicides has remained relatively stable over last 15 years, ranging from 416,965 to 451,046 cases per year. This means that approximately 50 murders occur every hour worldwide. However, the geography of violence matters greatly. Some regions are far safer than others. For example, in Oceania, there are on average 3 to 4 homicides per day, while in the Americas, that number is around 412 homicides per day. The homicide rate in the Americas is nearly five times higher than in Oceania.
-      </div>
-
       <div class="counter-block">
         <div class="counter-title">Registered Homicides</div>
         <div class="counter-value" id="count3">0</div>
+      </div>
+
+      <div class="text-block">
+        The rate of intentional homicides has remained relatively stable over last 15 years, ranging from 416,965 to 451,046 cases per year. This means that approximately 50 murders occur every hour worldwide. However, the geography of violence matters greatly. Some regions are far safer than others. For example, in Oceania, there are on average 3 to 4 homicides per day, while in the Americas, that number is around 412 homicides per day. The homicide rate in the Americas is nearly five times higher than in Oceania.
       </div>
 
       <button class="btn" id="stopBtn">STOP VIOLENCE</button>
     </section>
   </main>
 
-  <footer>
+  <div id="popup-overlay" class="hidden"></div>
+  <div id="popup" class="hidden">
+    <div class="close" id="popupClose">&times;</div>
+    <h3>Unfortunately, violence cannot be stopped by pressing a button.</h3>
+    <p>But you can:</p>
+    <ul>
+      <li>Keep this page open throughout your workday and revisit the counters later.</li>
+      <li>Stay mindful of the amount of violence in the world, especially the unregistered cases.</li>
+      <li>Do not use violence to achieve your goals.</li>
+    </ul>
+  </div>
+
+<footer>
     <div class="container">
       <details>
         <summary>Sources</summary>
@@ -226,8 +292,9 @@
   <script>
     const startBtn = document.getElementById('startBtn');
     const stopBtn = document.getElementById('stopBtn');
-    const instructionText = document.getElementById('instructionText');
-    const contentPage = document.getElementById('contentPage');
+    const popup = document.getElementById('popup');
+    const popupOverlay = document.getElementById('popup-overlay');
+    const popupClose = document.getElementById('popupClose');
 
     let count1 = 0, count2 = 0, count3 = 0;
     let timers = [];
@@ -245,9 +312,9 @@
 
     startBtn.addEventListener('click', () => {
       startBtn.classList.add('hidden');
-      instructionText.classList.add('hidden');
+      document.getElementById('instructionText').classList.add('hidden');
       document.getElementById('startPrompt').classList.add('hidden');
-      contentPage.classList.remove('hidden');
+      document.getElementById('contentPage').classList.remove('hidden');
       document.getElementById('violentTitle').classList.remove('hidden');
       document.getElementById('homicideTitle').classList.remove('hidden');
 
@@ -268,8 +335,18 @@
     });
 
     stopBtn.addEventListener('click', () => {
-      alert("VIOLENCE CANNOT BE STOPPED BY PRESSING A BUTTON");
-      timers.forEach(clearInterval);
+      popup.classList.remove('hidden');
+      popupOverlay.classList.remove('hidden');
+    });
+
+    popupClose.addEventListener('click', () => {
+      popup.classList.add('hidden');
+      popupOverlay.classList.add('hidden');
+    });
+
+    popupOverlay.addEventListener('click', () => {
+      popup.classList.add('hidden');
+      popupOverlay.classList.add('hidden');
     });
   </script>
 </body>
