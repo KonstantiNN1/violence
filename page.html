@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Global Violence Tracker</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      background-color: #111;
+      color: #fff;
+      margin: 0;
+      padding: 50px 20px;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 72px;
+      margin-bottom: 30px;
+    }
+
+    h2 {
+      font-size: 56px;
+      margin: 40px 0 20px;
+      color: crimson;
+  }
+
+    .btn {
+      padding: 20px 40px;
+      font-size: 30px;
+      background-color: crimson;
+      border: none;
+      color: white;
+      cursor: pointer;
+      border-radius: 8px;
+      margin-top: 20px;
+      transition: background-color 0.3s;
+    }
+
+    .btn:hover {
+      background-color: darkred;
+    }
+
+    .text-block {
+      font-size: 27px;
+      max-width: 920px; 
+      margin: 0 auto 40px;
+      opacity: 0.95;
+      line-height: 1.5;
+    }
+
+    .counter-block {
+      margin: 40px 0 70px;
+    }
+
+    .counter-title {
+      font-size: 36px;
+      margin-bottom: 15px;
+    }
+
+    .counter-value {
+      font-size: 72px;
+      font-weight: bold;
+      margin-bottom: 10px;
+      color: crimson;
+    }
+
+    img {
+      width: 100%;
+      max-width: 720px;
+      margin: 40px 0 30px;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    footer {
+      margin-top: 100px;
+      padding: 40px 20px 80px;
+      background-color: transparent;
+      color: #ccc;
+      font-size: 18px;
+      width: 100%;
+    }
+
+    footer .container {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+      text-align: left;
+    }
+
+    footer details {
+      color: #fff;
+      flex: 1;
+      min-width: 280px;
+    }
+
+    footer a {
+      color: #add8e6;
+      text-decoration: none;
+    }
+
+    footer summary {
+      cursor: pointer;
+      font-size: 22px;
+      font-weight: bold;
+    }
+
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 36px;
+      }
+
+      .text-block {
+        font-size: 20px;
+      }
+
+      .counter-title {
+        font-size: 28px;
+      }
+
+      .counter-value {
+        font-size: 48px;
+      }
+
+      .btn {
+        font-size: 24px;
+        padding: 15px 30px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <main>
+    <h1>Welcome to the<br>
+      Global Violence Tracker</h1>
+    <h2 id="violentTitle" class="hidden">Violent Offences</h2>
+    <p class="text-block" id="instructionText">
+      “No reasonable person would think of blotting out ink stains with ink or oil stains with oil — yet blood is always washed away only with blood.”<br>
+      — Bertha von Suttner, Lay Down Your Arms!
+    </p>
+
+    <p class="text-block" id="startPrompt">Click START NOW to begin.</p>
+    <button class="btn" id="startBtn">START NOW</button>
+
+    <section id="contentPage" class="hidden">
+
+      <img src="/images/first.png" alt="Illustration 1" />
+      <div class="text-block">
+        Every three seconds, approximately four violent crimes are committed worldwide. However, it is important to recognize that these are only officially recorded cases, representing just a fraction of the actual situation. Research conducted in European Union countries shows that only 13–25% of women who have experienced gender-based violence report it to the authorities.
+        The remaining cases remain invisible — both to institutions and, often, to society as a whole.
+      </div>
+
+      <div class="counter-block">
+        <div class="counter-title">Registered Violence Offenses</div>
+        <div class="counter-value" id="count1">0</div>
+      </div>
+
+      <div class="text-block">
+        There are several reasons why people choose not to report crimes.<br>
+        <b>Psychological factors: </b>feelings of shame, fear, or cognitive distortions — the belief that "this is normal" or "how things are supposed to be..<br>
+        <b>Social reasons: </b> Victim-blaming, cultural norms, and societal expectations often discourage victims from speaking out. In many communities, silence becomes the default response.<br>
+        <b>Institutional barriers: </b> lack of trust in the police, system overload, or the simple inaccessibility of formal reporting mechanisms.
+      </div>
+
+      <img src="/images/second.png" alt="Illustration 2" />
+      <div class="counter-block">
+        <div class="counter-title">Possible Violence Offenses</div>
+        <div class="counter-value" id="count2">0</div>
+      </div>
+    
+      <h2 id="homicideTitle" class="hidden">Intentional Homicide</h2>
+
+      <img src="/images/third.png" alt="Illustration 3" />
+      <div class="text-block">
+        The rate of intentional homicides has remained relatively stable over last 15 years, ranging from 416,965 to 451,046 cases per year. This means that approximately 50 murders occur every hour worldwide.
+        However, the geography of violence matters greatly. Some regions are far safer than others.
+        For example, in Oceania, there are on average 3 to 4 homicides per day, while in the Americas, that number is around 412 homicides per day.
+        The homicide rate in the Americas is nearly five times higher than in Oceania.
+      </div>
+
+      <div class="counter-block">
+        <div class="counter-title">Registered Homicides</div>
+        <div class="counter-value" id="count3">0</div>
+      </div>
+
+      <button class="btn" id="stopBtn">STOP VIOLENCE</button>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <details>
+        <summary>Sources</summary>
+        <ul>
+          <li><a href="https://dataunodc.un.org/dp-intentional-homicide-victims-est" target="_blank">Intentional Homicides – UNODC</a></li>
+          <li><a href="https://dataunodc.un.org/dp-crime-violent-offences" target="_blank">Violent Offences – UNODC</a></li>
+          <li><a href="https://www.unodc.org/unodc/en/data-and-analysis/global-study-on-homicide.html" target="_blank">Global Study on Homicide – UNODC</a></li>
+          <li><a href="https://www.zitate7.de/4051/Keinem-vernuenftigen-Menschen-wird-es-einfallen.html" target="_blank">Quote by Bertha von Suttner</a></li>
+          <li><a href="https://pace.coe.int/en/files/22519/html?utm_source=chatgpt.com#_TOC_d50e288" target="_blank">Violence Against Women – PACE</a></li>
+          <li><a href="https://www150.statcan.gc.ca/n1/pub/85-002-x/2015001/article/14198-eng.htm" target="_blank">Reporting Victimization – Canada</a></li>
+        </ul>
+      </details>
+
+      <details>
+        <summary>Methodology</summary>
+        <p>Detailed description of research methods, data collection procedures, and analysis techniques used throughout the project.</p>
+      </details>
+
+      <details>
+        <summary>Authorship</summary>
+        <p>
+          Concept and text – Konstantin<br />
+          Illustrations – ChatGPT<br />
+          Code – Konstantin and ChatGPT
+        </p>
+      </details>
+    </div>
+  </footer>
+
+  <script>
+    const startBtn = document.getElementById('startBtn');
+    const stopBtn = document.getElementById('stopBtn');
+    const instructionText = document.getElementById('instructionText');
+    const contentPage = document.getElementById('contentPage');
+
+    let count1 = 0, count2 = 0, count3 = 0;
+    let timers = [];
+
+    startBtn.addEventListener('click', () => {
+  startBtn.classList.add('hidden');
+  instructionText.classList.add('hidden');
+  document.getElementById('startPrompt').classList.add('hidden');
+  contentPage.classList.remove('hidden');
+  document.getElementById('violentTitle').classList.remove('hidden');
+  document.getElementById('homicideTitle').classList.remove('hidden');
+
+  timers.push(setInterval(() => {
+    count1++;
+    document.getElementById('count1').textContent = count1.toLocaleString();
+  }, 740));
+
+  timers.push(setInterval(() => {
+    count2++;
+    document.getElementById('count2').textContent = count2.toLocaleString();
+  }, 148));
+
+  timers.push(setInterval(() => {
+    count3++;
+    document.getElementById('count3').textContent = count3.toLocaleString();
+  }, 75000));
+  });
+
+    stopBtn.addEventListener('click', () => {
+      alert("VIOLENCE CANNOT BE STOPPED BY PRESSING A BUTTON");
+      timers.forEach(clearInterval);
+    });
+  </script>
+
+</body>
+</html>
