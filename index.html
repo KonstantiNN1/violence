@@ -1,388 +1,429 @@
-  <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Global Violence Tracker</title>
 
-  <link rel="preload" as="image" href="images/first.png" />
-  <link rel="preload" as="image" href="images/second.png" />
-  <link rel="preload" as="image" href="images/third.png" />
+  <link rel="preload" as="image" href="images/first.png"/>
+  <link rel="preload" as="image" href="images/second.png"/>
+  <link rel="preload" as="image" href="images/third.png"/>
 
   <style>
-    body {
-      font-family: sans-serif;
-      background-color: #111;
-      color: #fff;
-      margin: 0;
-      padding: 50px 20px;
-      text-align: center;
-    }
+/* === Global Styles === */
+body {
+  font-family: sans-serif;
+  background-color: #111;
+  color: #fff;
+  margin: 0;
+  padding: 50px 20px;
+  text-align: center;
+}
 
-    h1 {
-      font-size: 72px;
-      margin-bottom: 30px;
-    }
+h1 {
+  font-size: 72px;
+  margin-bottom: 30px;
+}
 
-    h2 {
-      font-size: 56px;
-      margin: 40px 0 20px;
-      color: crimson;
-    }
+h2 {
+  font-size: 56px;
+  margin: 40px 0 20px;
+  color: crimson;
+}
 
-    .btn {
-      padding: 20px 40px;
-      font-size: 30px;
-      border: none;
-      color: white;
-      cursor: pointer;
-      border-radius: 8px;
-      margin-top: 20px;
-      transition: background-color 0.3s;
-    }
+.btn {
+  padding: 20px 40px;
+  font-size: 30px;
+  border: none;
+  color: white;
+  cursor: pointer;
+  border-radius: 8px;
+  margin-top: 20px;
+  transition: background-color 0.3s;
+  background-color: crimson;
+}
 
-    .btn:disabled {
-      background-color: #555;
-      cursor: not-allowed;
-    }
+.btn:disabled {
+  background-color: #555;
+  cursor: not-allowed;
+}
 
-    .btn:not(:disabled) {
-      background-color: crimson;
-    }
-/* 
-    .btn:hover {
-      background-color: darkred;
-    } */
+.text-block {
+  font-size: 27px;
+  max-width: 920px;
+  margin: 0 auto 40px;
+  opacity: 0.95;
+  line-height: 1.5;
+}
 
-    .text-block {
-      font-size: 27px;
-      max-width: 920px; 
-      margin: 0 auto 40px;
-      opacity: 0.95;
-      line-height: 1.5;
-    }
+img {
+  width: 100%;
+  max-width: 720px;
+  margin: 40px 0 30px;
+}
 
-    .counter-block {
-      margin: 40px 0 70px;
-    }
+.hidden {
+  display: none;
+}
 
-    .counter-title {
-      font-size: 36px;
-      margin-bottom: 15px;
-    }
+/* === Counter Blocks === */
+.counter-block {
+  margin: 40px 0 70px;
+}
 
-    .counter-value {
-      font-size: 72px;
-      font-weight: bold;
-      margin-bottom: 10px;
-      color: crimson;
-    }
+.counter-title {
+  font-size: 36px;
+  margin-bottom: 15px;
+}
 
-    img {
-      width: 100%;
-      max-width: 720px;
-      margin: 40px 0 30px;
-    }
+.counter-value {
+  font-size: 72px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: crimson;
+}
 
-    .hidden {
-      display: none;
-    }
+/* === POPUP OVERLAYS === */
+#popup-overlay,
+#start-popup-overlay {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 9998;
+}
 
-    #popup {
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      background-color: #222;
-      color: #fff;
-      padding: 30px 30px 20px;
-      border: 2px solid crimson;
-      border-radius: 12px;
-      box-shadow: 0 0 20px rgba(255, 0, 0, 0.5);
-      max-width: 600px;
-      z-index: 9999;
-    }
+/* === POPUP WINDOWS === */
+#popup,
+#start-popup {
+  position: fixed;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #222;
+  color: #fff;
+  padding: 30px 30px 20px;
+  border: 2px solid crimson;
+  border-radius: 12px;
+  box-shadow: 0 0 20px rgba(255, 0, 0, 0.5);
+  max-width: 600px;
+  z-index: 9999;
+  font-size: 120%; /* текст на 20% больше */
+}
 
-    #popup h3 {
-      font-size: 28px;
-      margin-bottom: 10px;
-      color: crimson;
-    }
+/* Заголовки всех попапов */
+#popup h3,
+#start-popup h3 {
+  font-size: 34px;
+  margin-bottom: 20px;
+  color: crimson;
+}
 
-    #popup p {
-      font-size: 20px;
-      margin: 10px 0 20px;
-    }
+/* Close button (×) */
+#popup .close,
+#start-popup .close {
+  position: absolute;
+  top: 10px; right: 15px;
+  font-size: 24px;
+  color: #fff;
+  cursor: pointer;
+}
 
-    #popup ul {
-      text-align: left;
-      margin: 0;
-      padding-left: 20px;
-    }
+/* Consent popup content */
+#start-popup p,
+#start-popup ul {
+  text-align: left;
+  margin: 10px 0 20px;
+  padding-left: 20px;
+  list-style: disc inside;
+}
 
-    #popup ul li {
-      margin-bottom: 10px;
-      font-size: 20px;
-    }
+/* Stop popup content */
+#popup p {
+  text-align: left;
+  margin: 10px 0 20px;
+}
+#popup ul {
+  text-align: left;
+  margin: 10px 0 20px;
+  padding-left: 20px;
+  list-style: disc inside;
+}
 
-    #popup .close {
-      position: absolute;
-      top: 10px;
-      right: 15px;
-      font-size: 24px;
-      color: #fff;
-      cursor: pointer;
-    }
+/* Link in stop-popup */
+#popup a {
+  color: #fff;
+  text-decoration: underline;
+}
+#popup a:visited {
+  color: #fff;
+}
+#popup a:hover {
+  color: #eee;
+}
 
-    #popup-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      background: rgba(0, 0, 0, 0.6);
-      z-index: 9998;
-    }
+/* === FOOTER === */
+footer {
+  margin-top: 100px;
+  padding: 40px 0 80px;
+  color: #ccc;
+  font-size: 18px;
+  width: 100%;
+}
 
-    footer {
-      margin-top: 100px;
-      padding: 40px 20px 80px;
-      background-color: transparent;
-      color: #ccc;
-      font-size: 18px;
-      width: 100%;
-    }
+/* container full width */
+footer .container {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 20px;
+  width: 100%;
+  padding: 0 20px;
+  box-sizing: border-box;
+}
 
-    footer .container {
-      display: flex;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 20px;
-      max-width: 1200px;
-      margin: 0 auto;
-      text-align: left;
-    }
+/* each details takes 30% */
+footer .container details {
+  flex: 0 0 30%;
+  width: 30%;
+}
 
-    footer details {
-      color: #fff;
-      flex: 1;
-      min-width: 280px;
-    }
+/* indent summary content */
+footer details summary {
+  padding-left: 1.2em;
+}
+footer details > :not(summary) {
+  padding-left: 1.2em;
+}
 
-    footer a {
-      color: #add8e6;
-      text-decoration: none;
-    }
+/* Sources & Methodology: left align, no bullets */
+footer details:nth-of-type(1) ul,
+footer details:nth-of-type(2) ul {
+  list-style: none;
+  margin: 0 0 20px;
+  padding: 0;
+  text-align: left;
+}
+footer details:nth-of-type(2) p {
+  text-align: left;
+  margin: 0 0 20px;
+}
 
-    footer summary {
-      cursor: pointer;
-      font-size: 22px;
-      font-weight: bold;
-    }
+/* Authorship: left align text */
+footer details:nth-of-type(3) p {
+  text-align: left;
+  margin: 0;
+}
 
-    @media (max-width: 600px) {
-      h1 {
-        font-size: 36px;
-      }
+/* footer links */
+footer a {
+  color: #add8e6;
+  text-decoration: none;
+}
 
-      .text-block {
-        font-size: 20px;
-      }
+footer summary {
+  cursor: pointer;
+  font-size: 22px;
+  font-weight: bold;
+}
 
-      .counter-title {
-        font-size: 28px;
-      }
+/* === Responsive Adjustments === */
+@media (max-width: 600px) {
+  h1 { font-size: 36px; }
+  .text-block { font-size: 20px; }
+  .counter-title { font-size: 28px; }
+  .counter-value { font-size: 48px; }
+  .btn { font-size: 24px; padding: 15px 30px; }
+}
 
-      .counter-value {
-        font-size: 48px;
-      }
-
-      .btn {
-        font-size: 24px;
-        padding: 15px 30px;
-      }
-    }
   </style>
 </head>
 <body>
-<main>
-  <h1>Welcome to the<br>Global Violence Tracker</h1>
+  <main>
+    <h1>Welcome to the<br>Global Violence Tracker</h1>
+    <p class="text-block" id="instructionText">
+      This webpage displays the level of violence in the world in real time<sup>*</sup>
+    </p>
+    <button class="btn" id="startBtn">START NOW</button>
 
-  <p class="text-block" id="instructionText" style="text-align:left;">
-    This webpage displays the level of violence in the world in real time<sup>*</sup>
-  </p>
+    <section id="contentPage" class="hidden">
+      <h2 id="violentTitle" class="hidden">Violent Offences</h2>
+      <img src="images/first.png" alt="Illustration 1" loading="eager" decoding="async">
+      <div class="counter-block">
+        <div class="counter-title">Registered Violence Offenses</div>
+        <div class="counter-value" id="count1">0</div>
+      </div>
+      <div class="text-block" style="text-align:left;">
+        Every three seconds, approximately four violent crimes are committed worldwide. However, it is important to recognize that these are only officially recorded cases, representing just a fraction of the actual situation. Research conducted in European Union countries shows that only 13–25% of women who have experienced gender-based violence report it to the authorities. The remaining cases remain invisible — both to institutions and, often, to society as a whole.
+      </div>
+      <img src="images/second.png" alt="Illustration 2" loading="eager" decoding="async">
+      <div class="counter-block">
+        <div class="counter-title">Possible Violence Offenses</div>
+        <div class="counter-value" id="count2">0</div>
+      </div>
+      <div class="text-block" style="text-align:left;">
+        <p>There are several reasons why people choose not to report crimes.</p>
+        <ul style="list-style: disc inside; margin: 0; padding-left: 1em;">
+          <li><b>Psychological factors:</b> feelings of shame, fear, or cognitive distortions — the belief that “this is normal” or “how things are supposed to be.”</li>
+          <li><b>Social reasons:</b> victim-blaming, cultural norms, and societal expectations often discourage victims from speaking out. In many communities, silence becomes the default response.</li>
+          <li><b>Institutional barriers:</b> lack of trust in the police, system overload, or the simple inaccessibility of formal reporting mechanisms.</li>
+        </ul>
+      </div>
+      <h2 id="homicideTitle" class="hidden">Intentional Homicide</h2>
+      <img src="images/third.png" alt="Illustration 3" loading="eager" decoding="async">
+      <div class="counter-block">
+        <div class="counter-title">Registered Homicides</div>
+        <div class="counter-value" id="count3">1</div>
+      </div>
+      <div class="text-block" style="text-align:left;">
+        The rate of intentional homicides has remained relatively stable over the last 15 years, ranging from 416,965 to 451,046 cases per year. This means that approximately 50 murders occur every hour worldwide. However, the geography of violence matters greatly. Some regions are far safer than others. For example, in Oceania, there are on average 3 to 4 homicides per day, while in the Americas, that number is around 412 homicides per day. The homicide rate in the Americas is nearly five times higher than in Oceania.
+      </div>
+      <button class="btn" id="stopBtn">STOP VIOLENCE</button>
+    </section>
 
-  <button class="btn" id="startBtn" disabled>START NOW</button>
-
-  <div id="checkboxes" class="text-block" style="text-align:left; max-width:720px; margin:20px auto;">
-    <label style="display:block; margin-bottom:10px;">
-      <input type="checkbox" id="consent1" style="margin-right:10px;">
-      I acknowledge that the following materials relate to real-world violence and may be triggering for some individuals.
-    </label>
-    <label style="display:block;">
-      <input type="checkbox" id="consent2" style="margin-right:10px;">
-      I understand that by clicking the button, I am NOT triggering violence in the world, but simply observing statistics.
-    </label>
-  </div>
-
-  <section id="contentPage" class="hidden">
-    <h2 id="violentTitle" class="hidden">Violent Offences</h2>
-
-    <img src="images/first.png" alt="Illustration 1" loading="eager" decoding="async">
-
-    <div class="counter-block">
-      <div class="counter-title">Registered Violence Offenses</div>
-      <div class="counter-value" id="count1">0</div>
+    <!-- consent-popup -->
+    <div id="start-popup-overlay" class="hidden"></div>
+    <div id="start-popup" class="hidden">
+      <div class="close" id="start-popup-close">&times;</div>
+      <h3>Press to continue</h3>
+      <div id="start-checkboxes" style="text-align:left; margin:20px 0;">
+        <label style="display:block; margin-bottom:10px;">
+          <input type="checkbox" id="popupConsent1" style="margin-right:10px;">
+          I acknowledge that the following materials relate to real-world violence and may be triggering for some individuals.
+        </label>
+        <label style="display:block;">
+          <input type="checkbox" id="popupConsent2" style="margin-right:10px;">
+          I understand that by clicking the button, I am NOT triggering violence in the world, but simply observing statistics.
+        </label>
+      </div>
+      <button class="btn" id="popup-start-btn" disabled>START NOW</button>
     </div>
 
-    <div class="text-block" style="text-align:left;">
-      Every three seconds, approximately four violent crimes are committed worldwide. However, it is important to recognize that these are only officially recorded cases, representing just a fraction of the actual situation. Research conducted in European Union countries shows that only 13–25% of women who have experienced gender-based violence report it to the authorities. The remaining cases remain invisible — both to institutions and, often, to society as a whole.
+    <!-- existing STOP-popup -->
+<div id="popup-overlay" class="hidden"></div>
+<div id="popup" class="hidden">
+  <div class="close" id="popupClose">&times;</div>
+  <h3>Unfortunately, violence cannot be stopped by pressing a button.</h3>
+  <p>But you can:</p>
+  <ul>
+    <li>Keep this page open throughout your workday and revisit the counters later.</li>
+    <li>Stay mindful of the amount of violence in the world, especially the unregistered cases.</li>
+    <li>Do not use violence to achieve your goals.</li>
+    <li>Remember that violence is deviant and non-normative behavior.</li>
+    <li>Review additional recommendations on what to do when encountering violence, for example <a href="https://strongheartshelpline.org/abuse/safety-during-a-violent-encounter" target="_blank">Safety During a Violent Encounter</a>.</li>
+  </ul>
+</div>
+  </main>
+
+  <footer>
+    <div class="container">
+      <details>
+        <summary>Sources</summary>
+        <ul>
+          <li><a href="https://dataunodc.un.org/dp-intentional-homicide-victims-est" target="_blank">Intentional Homicides – UNODC</a></li>
+          <li><a href="https://dataunodc.un.org/dp-crime-violent-offences" target="_blank">Violent Offences – UNODC</a></li>
+          <li><a href="https://www.unodc.org/unodc/en/data-and-analysis/global-study-on-homicide.html" target="_blank">Global Study on Homicide – UNODC</a></li>
+          <li><a href="https://www.zitate7.de/4051/Keinem-vernuenftigen-Menschen-wirdEs-einfallen.html" target="_blank">Quote by Bertha von Suttner</a></li>
+          <li><a href="https://pace.coe.int/en/files/22519/html?utm_source=chatgpt.com#_TOC_d50e288" target="_blank">Violence Against Women – PACE</a></li>
+          <li><a href="https://www150.statcan.gc.ca/n1/pub/85-002-x/2015001/article/14198-eng.htm" target="_blank">Reporting Victimization – Canada</a></li>
+        </ul>
+      </details>
+      <details>
+        <summary>Methodology</summary>
+        <p>
+          • <b>Data source:</b> All figures come from UNODC.<br>
+          • <b>Counter 1:</b> Summed latest violent‐crime totals per country, then divided by 525 600 (365×24×60) to get crimes per minute.<br>
+          • <b>Counter 2:</b> Multiplied Counter 1’s rate by 5 to account for under‐reporting (based on 13–25 % reporting rates).<br>
+          • <b>Counter 3:</b> Used global 2023 homicide total, started at 1, and incremented every 75 000 ms (~50 murders/hour).
+        </p>
+      </details>
+      <details>
+        <summary>Authorship</summary>
+        <p>
+          Concept and text – Konstantin<br>
+          Illustrations – ChatGPT<br>
+          Code – Konstantin and ChatGPT
+        </p>
+      </details>
     </div>
-
-    <img src="images/second.png" alt="Illustration 2" loading="eager" decoding="async">
-
-    <div class="counter-block">
-      <div class="counter-title">Possible Violence Offenses</div>
-      <div class="counter-value" id="count2">0</div>
-    </div>
-
-    <div class="text-block" style="text-align:left;">
-      <p>There are several reasons why people choose not to report crimes.</p>
-      <ul style="list-style: disc inside; margin: 0; padding-left: 1em;">
-        <li><b>Psychological factors:</b> feelings of shame, fear, or cognitive distortions — the belief that “this is normal” or “how things are supposed to be.”</li>
-        <li><b>Social reasons:</b> victim-blaming, cultural norms, and societal expectations often discourage victims from speaking out. In many communities, silence becomes the default response.</li>
-        <li><b>Institutional barriers:</b> lack of trust in the police, system overload, or the simple inaccessibility of formal reporting mechanisms.</li>
-      </ul>
-    </div>
-
-    <h2 id="homicideTitle" class="hidden">Intentional Homicide</h2>
-
-    <img src="images/third.png" alt="Illustration 3" loading="eager" decoding="async">
-
-    <div class="counter-block">
-      <div class="counter-title">Registered Homicides</div>
-      <div class="counter-value" id="count3">1</div>
-    </div>
-
-    <div class="text-block" style="text-align:left;">
-      The rate of intentional homicides has remained relatively stable over the last 15 years, ranging from 416,965 to 451,046 cases per year. This means that approximately 50 murders occur every hour worldwide. However, the geography of violence matters greatly. Some regions are far safer than others. For example, in Oceania, there are on average 3 to 4 homicides per day, while in the Americas, that number is around 412 homicides per day. The homicide rate in the Americas is nearly five times higher than in Oceania.
-    </div>
-
-    <button class="btn" id="stopBtn">STOP VIOLENCE</button>
-  </section>
-
-  <div id="popup-overlay" class="hidden"></div>
-  <div id="popup" class="hidden">
-    <div class="close" id="popupClose">&times;</div>
-    <h3>Unfortunately, violence cannot be stopped by pressing a button.</h3>
-    <p>But you can:</p>
-    <ul>
-      <li>Keep this page open throughout your workday and revisit the counters later.</li>
-      <li>Stay mindful of the amount of violence in the world, especially the unregistered cases.</li>
-      <li>Do not use violence to achieve your goals.</li>
-    </ul>
-  </div>
-</main>
-
-<footer>
-  <div class="container">
-    <details>
-      <summary>Sources</summary>
-      <ul>
-        <li><a href="https://dataunodc.un.org/dp-intentional-homicide-victims-est" target="_blank">Intentional Homicides – UNODC</a></li>
-        <li><a href="https://dataunodc.un.org/dp-crime-violent-offences" target="_blank">Violent Offences – UNODC</a></li>
-        <li><a href="https://www.unodc.org/unodc/en/data-and-analysis/global-study-on-homicide.html" target="_blank">Global Study on Homicide – UNODC</a></li>
-        <li><a href="https://www.zitate7.de/4051/Keinem-vernuenftigen-Menschen-wird-es-einfallen.html" target="_blank">Quote by Bertha von Suttner</a></li>
-        <li><a href="https://pace.coe.int/en/files/22519/html?utm_source=chatgpt.com#_TOC_d50e288" target="_blank">Violence Against Women – PACE</a></li>
-        <li><a href="https://www150.statcan.gc.ca/n1/pub/85-002-x/2015001/article/14198-eng.htm" target="_blank">Reporting Victimization – Canada</a></li>
-      </ul>
-    </details>
-
-    <details>
-      <summary>Methodology</summary>
-      <p>
-        • <b>Data source:</b> All figures come from UNODC.<br>
-        • <b>Counter 1:</b> Summed latest violent‐crime totals per country, then divided by 525 600 (365×24×60) to get crimes per minute.<br>
-        • <b>Counter 2:</b> Multiplied Counter 1’s rate by 5 to account for under‐reporting (based on 13–25 % reporting rates).<br>
-        • <b>Counter 3:</b> Used global 2023 homicide total, started at 1, and incremented every 75 000 ms (~50 murders/hour).
-      </p>
-    </details>
-
-    <details>
-      <summary>Authorship</summary>
-      <p>
-        Concept and text – Konstantin<br>
-        Illustrations – ChatGPT<br>
-        Code – Konstantin and ChatGPT
-      </p>
-    </details>
-  </div>
-</footer>
+  </footer>
 
   <script>
-  const startBtn      = document.getElementById('startBtn');
-  const checkbox1     = document.getElementById('consent1');
-  const checkbox2     = document.getElementById('consent2');
-  const checkboxesDiv = document.getElementById('checkboxes');
-  const instrText     = document.getElementById('instructionText');
-  const contentPage   = document.getElementById('contentPage');
-  const violentTitle  = document.getElementById('violentTitle');
-  const homicideTitle = document.getElementById('homicideTitle');
+    document.addEventListener('DOMContentLoaded', () => {
+      const startBtn      = document.getElementById('startBtn');
+      const startOverlay  = document.getElementById('start-popup-overlay');
+      const startPopup    = document.getElementById('start-popup');
+      const startClose    = document.getElementById('start-popup-close');
+      const chk1          = document.getElementById('popupConsent1');
+      const chk2          = document.getElementById('popupConsent2');
+      const popupStartBtn = document.getElementById('popup-start-btn');
 
-  function updateStartBtnState() {
-    startBtn.disabled = !(checkbox1.checked && checkbox2.checked);
-  }
-  checkbox1.addEventListener('change', updateStartBtnState);
-  checkbox2.addEventListener('change', updateStartBtnState);
+      const instructionText = document.getElementById('instructionText');
+      const contentPage     = document.getElementById('contentPage');
+      const violentTitle    = document.getElementById('violentTitle');
+      const homicideTitle   = document.getElementById('homicideTitle');
 
-  let count1 = 0, count2 = 0, count3 = 1, timers = [];
+      let count1 = 0, count2 = 0, count3 = 1, timers = [];
 
-  startBtn.addEventListener('click', () => {
-    startBtn.classList.add('hidden');
-    instrText.classList.add('hidden');
-    checkboxesDiv.classList.add('hidden');
+      startBtn.addEventListener('click', () => {
+        startOverlay.classList.remove('hidden');
+        startPopup.classList.remove('hidden');
+      });
 
-    contentPage.classList.remove('hidden');
-    violentTitle.classList.remove('hidden');
-    homicideTitle.classList.remove('hidden');
+      function closeStart() {
+        startOverlay.classList.add('hidden');
+        startPopup.classList.add('hidden');
+      }
+      startClose.addEventListener('click', closeStart);
+      startOverlay.addEventListener('click', closeStart);
 
-    // count1 и count2 стартуют с 0 автоматически
-    timers.push(setInterval(() => {
-      count1++;
-      document.getElementById('count1').textContent = count1.toLocaleString();
-    }, 740));
+      function updatePopupStart() {
+        popupStartBtn.disabled = !(chk1.checked && chk2.checked);
+      }
+      chk1.addEventListener('change', updatePopupStart);
+      chk2.addEventListener('change', updatePopupStart);
 
-    timers.push(setInterval(() => {
-      count2++;
-      document.getElementById('count2').textContent = count2.toLocaleString();
-    }, 148));
+      popupStartBtn.addEventListener('click', () => {
+        closeStart();
+        startBtn.classList.add('hidden');
+        instructionText.classList.add('hidden');
+        contentPage.classList.remove('hidden');
+        violentTitle.classList.remove('hidden');
+        homicideTitle.classList.remove('hidden');
 
-    // count3 стартует с 1
-    timers.push(setInterval(() => {
-      count3++;
-      document.getElementById('count3').textContent = count3.toLocaleString();
-    }, 75000));
-  });
+        timers.push(setInterval(() => {
+          count1++;
+          document.getElementById('count1').textContent = count1.toLocaleString();
+        }, 740));
+        timers.push(setInterval(() => {
+          count2++;
+          document.getElementById('count2').textContent = count2.toLocaleString();
+        }, 148));
+        timers.push(setInterval(() => {
+          count3++;
+          document.getElementById('count3').textContent = count3.toLocaleString();
+        }, 75000));
+      });
 
-  // popup logic
-  const stopBtn    = document.getElementById('stopBtn');
-  const popup      = document.getElementById('popup');
-  const overlay    = document.getElementById('popup-overlay');
-  const popupClose = document.getElementById('popupClose');
+      // STOP-popup
+      const stopBtn    = document.getElementById('stopBtn');
+      const popup      = document.getElementById('popup');
+      const overlay    = document.getElementById('popup-overlay');
+      const popupClose = document.getElementById('popupClose');
 
-  stopBtn.addEventListener('click', () => {
-    popup.classList.remove('hidden');
-    overlay.classList.remove('hidden');
-  });
-  popupClose.addEventListener('click', () => {
-    popup.classList.add('hidden');
-    overlay.classList.add('hidden');
-  });
-  overlay.addEventListener('click', () => {
-    popup.classList.add('hidden');
-    overlay.classList.add('hidden');
-  });
-</script>
-
+      stopBtn.addEventListener('click', () => {
+        popup.classList.remove('hidden');
+        overlay.classList.remove('hidden');
+      });
+      popupClose.addEventListener('click', () => {
+        popup.classList.add('hidden');
+        overlay.classList.add('hidden');
+      });
+      overlay.addEventListener('click', () => {
+        popup.classList.add('hidden');
+        overlay.classList.add('hidden');
+      });
+    });
+  </script>
 </body>
 </html>
