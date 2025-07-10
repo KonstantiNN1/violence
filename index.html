@@ -108,10 +108,9 @@ img {
   box-shadow: 0 0 20px rgba(255, 0, 0, 0.5);
   max-width: 600px;
   z-index: 9999;
-  font-size: 120%; /* текст на 20% больше */
+  font-size: 120%;
 }
 
-/* Заголовки всех попапов */
 #popup h3,
 #start-popup h3 {
   font-size: 34px;
@@ -119,7 +118,6 @@ img {
   color: crimson;
 }
 
-/* Close button (×) */
 #popup .close,
 #start-popup .close {
   position: absolute;
@@ -129,7 +127,6 @@ img {
   cursor: pointer;
 }
 
-/* Consent popup content */
 #start-popup p,
 #start-popup ul {
   text-align: left;
@@ -138,7 +135,6 @@ img {
   list-style: disc inside;
 }
 
-/* Stop popup content */
 #popup p {
   text-align: left;
   margin: 10px 0 20px;
@@ -150,7 +146,6 @@ img {
   list-style: disc inside;
 }
 
-/* Link in stop-popup */
 #popup a {
   color: #fff;
   text-decoration: underline;
@@ -162,72 +157,65 @@ img {
   color: #eee;
 }
 
-/* === FOOTER === */
+/* === Footer === */
 footer {
   margin-top: 100px;
   padding: 40px 0 80px;
   color: #ccc;
-  font-size: 18px;
+  line-height: 1.5;
+  opacity: 0.95;
+  font-size: 13.5px;
   width: 100%;
 }
 
-/* container full width */
 footer .container {
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
   gap: 20px;
-  width: 100%;
   padding: 0 20px;
   box-sizing: border-box;
 }
 
-/* each details takes 30% */
 footer .container details {
   flex: 0 0 30%;
   width: 30%;
 }
 
-/* indent summary content */
 footer details summary {
   padding-left: 1.2em;
-}
-footer details > :not(summary) {
-  padding-left: 1.2em;
-}
-
-/* Sources & Methodology: left align, no bullets */
-footer details:nth-of-type(1) ul,
-footer details:nth-of-type(2) ul {
-  list-style: none;
-  margin: 0 0 20px;
-  padding: 0;
-  text-align: left;
-}
-footer details:nth-of-type(2) p {
-  text-align: left;
-  margin: 0 0 20px;
-}
-
-/* Authorship: left align text */
-footer details:nth-of-type(3) p {
-  text-align: left;
-  margin: 0;
-}
-
-/* footer links */
-footer a {
-  color: #add8e6;
-  text-decoration: none;
-}
-
-footer summary {
   cursor: pointer;
   font-size: 22px;
   font-weight: bold;
 }
 
-/* === Responsive Adjustments === */
+/* paragraphs immediately under summary get 85px left margin */
+footer details > summary + p {
+  margin-left: 85px;
+  padding-left: 0;
+}
+
+/* first details uses UL (no change) */
+footer details:nth-of-type(1) ul {
+  list-style: none;
+  margin: 0 0 20px;
+  padding: 0;
+  text-align: left;
+}
+
+/* methodology (2nd) and authorship (3rd) paragraphs */
+footer details:nth-of-type(2) p,
+footer details:nth-of-type(3) p {
+  margin: 0 0 20px 85px;
+  text-align: left;
+}
+
+footer a {
+  color: #add8e6;
+  text-decoration: none;
+}
+
+/* === Responsive === */
 @media (max-width: 600px) {
   h1 { font-size: 36px; }
   .text-block { font-size: 20px; }
@@ -235,14 +223,13 @@ footer summary {
   .counter-value { font-size: 48px; }
   .btn { font-size: 24px; padding: 15px 30px; }
 }
-
   </style>
 </head>
 <body>
   <main>
     <h1>Welcome to the<br>Global Violence Tracker</h1>
     <p class="text-block" id="instructionText">
-      This webpage displays the level of violence in the world in real time<sup>*</sup>
+      This webpage displays the level of violence in the world
     </p>
     <button class="btn" id="startBtn">START NOW</button>
 
@@ -254,7 +241,8 @@ footer summary {
         <div class="counter-value" id="count1">0</div>
       </div>
       <div class="text-block" style="text-align:left;">
-        Every three seconds, approximately four violent crimes are committed worldwide. However, it is important to recognize that these are only officially recorded cases, representing just a fraction of the actual situation. Research conducted in European Union countries shows that only 13–25% of women who have experienced gender-based violence report it to the authorities. The remaining cases remain invisible — both to institutions and, often, to society as a whole.
+        Every three seconds, approximately four violent crimes are committed worldwide. However, these figures reflect only officially recorded cases and likely represent just a fraction of the true scale of violence.<br>
+        Research from European Union countries indicates that only 13% to 25% of women who experience gender-based violence report it to the authorities. The vast majority of cases remain hidden — not only from institutions but often from society as a whole.      
       </div>
       <img src="images/second.png" alt="Illustration 2" loading="eager" decoding="async">
       <div class="counter-block">
@@ -299,50 +287,49 @@ footer summary {
       <button class="btn" id="popup-start-btn" disabled>START NOW</button>
     </div>
 
-    <!-- existing STOP-popup -->
-<div id="popup-overlay" class="hidden"></div>
-<div id="popup" class="hidden">
-  <div class="close" id="popupClose">&times;</div>
-  <h3>Unfortunately, violence cannot be stopped by pressing a button.</h3>
-  <p>But you can:</p>
-  <ul>
-    <li>Keep this page open throughout your workday and revisit the counters later.</li>
-    <li>Stay mindful of the amount of violence in the world, especially the unregistered cases.</li>
-    <li>Do not use violence to achieve your goals.</li>
-    <li>Remember that violence is deviant and non-normative behavior.</li>
-    <li>Review additional recommendations on what to do when encountering violence, for example <a href="https://strongheartshelpline.org/abuse/safety-during-a-violent-encounter" target="_blank">Safety During a Violent Encounter</a>.</li>
-  </ul>
-</div>
+    <!-- STOP-popup -->
+    <div id="popup-overlay" class="hidden"></div>
+    <div id="popup" class="hidden">
+      <div class="close" id="popupClose">&times;</div>
+      <h3>Unfortunately, violence cannot be stopped by pressing a button.</h3>
+      <p>But you can:</p>
+      <ul>
+        <li>Stay mindful of the amount of violence in the world, especially the unregistered cases.</li>
+        <li>Do not use violence to achieve your goals.</li>
+        <li>Remember that violence is deviant and non-normative behavior.</li>
+        <li>Review additional recommendations on what to do when encountering violence, for example <a href="https://strongheartshelpline.org/abuse/safety-during-a-violent-encounter" target="_blank">Safety During a Violent Encounter</a>.</li>
+      </ul>
+    </div>
   </main>
 
-  <footer>
+  <footer class="hidden">
     <div class="container">
       <details>
         <summary>Sources</summary>
         <ul>
-          <li><a href="https://dataunodc.un.org/dp-intentional-homicide-victims-est" target="_blank">Intentional Homicides – UNODC</a></li>
-          <li><a href="https://dataunodc.un.org/dp-crime-violent-offences" target="_blank">Violent Offences – UNODC</a></li>
-          <li><a href="https://www.unodc.org/unodc/en/data-and-analysis/global-study-on-homicide.html" target="_blank">Global Study on Homicide – UNODC</a></li>
-          <li><a href="https://www.zitate7.de/4051/Keinem-vernuenftigen-Menschen-wirdEs-einfallen.html" target="_blank">Quote by Bertha von Suttner</a></li>
-          <li><a href="https://pace.coe.int/en/files/22519/html?utm_source=chatgpt.com#_TOC_d50e288" target="_blank">Violence Against Women – PACE</a></li>
-          <li><a href="https://www150.statcan.gc.ca/n1/pub/85-002-x/2015001/article/14198-eng.htm" target="_blank">Reporting Victimization – Canada</a></li>
+          <li style="margin-left:150px;"><a href="https://dataunodc.un.org/dp-intentional-homicide-victims-est" target="_blank">Intentional Homicides – UNODC</a></li>
+          <li style="margin-left:150px;"><a href="https://dataunodc.un.org/dp-crime-violent-offences" target="_blank">Violent Offences – UNODC</a></li>
+          <li style="margin-left:150px;"><a href="https://www.unodc.org/unodc/en/data-and-analysis/global-study-on-homicide.html" target="_blank">Global Study on Homicide – UNODC</a></li>
+          <li style="margin-left:150px;"><a href="https://www.zitate7.de/4051/Keinem-vernuenftigen-Menschen-wirdEs-einfallen.html" target="_blank">Quote by Bertha von Suttner</a></li>
+          <li style="margin-left:150px;"><a href="https://pace.coe.int/en/files/22519/html" target="_blank">Violence Against Women – PACE</a></li>
+          <li style="margin-left:150px;"><a href="https://www150.statcan.gc.ca/n1/pub/85-002-x/2015001/article/14198-eng.htm" target="_blank">Reporting Victimization – Canada</a></li>
         </ul>
       </details>
       <details>
         <summary>Methodology</summary>
         <p>
-          • <b>Data source:</b> All figures come from UNODC.<br>
+          • <b>Data source:</b> Counters 1 and 3 are based on UNODC data; Counter 2 presents a hypothetical estimate<br>
           • <b>Counter 1:</b> Summed latest violent‐crime totals per country, then divided by 525 600 (365×24×60) to get crimes per minute.<br>
-          • <b>Counter 2:</b> Multiplied Counter 1’s rate by 5 to account for under‐reporting (based on 13–25 % reporting rates).<br>
-          • <b>Counter 3:</b> Used global 2023 homicide total, started at 1, and incremented every 75 000 ms (~50 murders/hour).
+          • <b>Counter 2:</b> Multiplied Counter 1’s rate by 5 to account for under-reporting.<br>
+          • <b>Counter 3:</b> Used global 2023 homicide total, started at 1, and incremented every 75 s (~50 murders/hour).<br>
         </p>
       </details>
       <details>
         <summary>Authorship</summary>
-        <p>
+        <p style="margin-left:150px;">
           Concept and text – Konstantin<br>
+          Code – Konstantin and ChatGPT<br>
           Illustrations – ChatGPT<br>
-          Code – Konstantin and ChatGPT
         </p>
       </details>
     </div>
@@ -390,6 +377,7 @@ footer summary {
         contentPage.classList.remove('hidden');
         violentTitle.classList.remove('hidden');
         homicideTitle.classList.remove('hidden');
+        document.querySelector('footer').classList.remove('hidden');
 
         timers.push(setInterval(() => {
           count1++;
@@ -405,7 +393,6 @@ footer summary {
         }, 75000));
       });
 
-      // STOP-popup
       const stopBtn    = document.getElementById('stopBtn');
       const popup      = document.getElementById('popup');
       const overlay    = document.getElementById('popup-overlay');
